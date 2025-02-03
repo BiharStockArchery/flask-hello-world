@@ -5,7 +5,7 @@ import pandas as pd
 
 app = Flask(__name__)
 
-# List of all stocks (same as the one you've provided)
+# List of all stocks
 all_stocks = [
     "AXISBANK.NS", "AUBANK.NS", "BANDHANBNK.NS", "BANKBARODA.NS", "BANKINDIA.NS",
     "CANBK.NS", "CUB.NS", "FEDERALBNK.NS", "HDFCBANK.NS", "ICICIBANK.NS",
@@ -29,14 +29,9 @@ all_stocks = [
     "BRITANNIA.NS", "COLPAL.NS", "DABUR.NS", "GODREJCP.NS", "HINDUNILVR.NS",
     "ITC.NS", "MARICO.NS", "NESTLEIND.NS", "TATACONSUM.NS", "UBL.NS", "UNITEDSPR.NS",
     "VOLTAS.NS", "ALKEM.NS", "APLLTD.NS", "AUROPHARMA.NS", "BIOCON.NS", "CIPLA.NS",
-    "DIVISLAB.NS", "DRREDDY.NS", "GLENMARK.NS", "GRANULES.NS", "LAURUSLABS.NS", "LUPIN.NS",
-    "SUNPHARMA.NS", "SYNGENE.NS", "TORNTPHARM.NS", "APOLLOHOSP.NS", "LALPATHLAB.NS",
-    "MAXHEALTH.NS", "METROPOLIS.NS", "BHARTIARTL.NS", "HFCL.NS", "IDEA.NS", "INDUSTOWER.NS",
-    "DLF.NS", "GODREJPROP.NS", "LODHA.NS", "OBEROIRLTY.NS", "PRESTIGE.NS", "GUJGASLTD.NS",
-    "IGL.NS", "MGL.NS", "CONCOR.NS", "CESC.NS", "HUDCO.NS", "IRFC.NS", "ABBOTINDIA.NS",
-    "BEL.NS", "CGPOWER.NS", "CUMMINSIND.NS", "HAL.NS", "L&T.NS", "SIEMENS.NS", "TIINDIA.NS",
-    "CHAMBLFERT.NS", "COROMANDEL.NS", "GNFC.NS", "PIIND.NS", "BSE.NS", "DELHIVERY.NS",
-    "GMRAIRPORT.NS", "IRCTC.NS", "KEI.NS", "NAVINFLUOR.NS", "POLYCAB.NS", "SUNTV.NS", "UPL.NS"
+    "DIVISLAB.NS "DRREDDY.NS", "GLAND.NS", "LUPIN.NS", "NATIONALUM.NS", "PHOENIXLTD.NS",
+    "SUNPHARMA.NS", "TORNTPHARM.NS", "WOCKPHARMA.NS", "HDFCBANK.NS", "ICICIBANK.NS",
+    "KOTAKBANK.NS", "PNB.NS", "SBIN.NS", "YESBANK.NS"
 ]
 
 def get_previous_trading_day():
@@ -57,16 +52,11 @@ def gainers():
             current_price = current_data['Close'].iloc[-1]
             percentage_change = ((current_price - previous_close) / previous_close) * 100
             
-            # Ensure percentage_change is a scalar
-            if isinstance(percentage_change, pd.Series):
-                percentage_change = percentage_change.item()
-
-            # Check if the percentage change is positive
             if percentage_change > 0:
                 stock_info[stock] = {
-                    'previous_close': float(previous_close),  # Convert to float
-                    'current_price': float(current_price),    # Convert to float
-                    'percentage_change': float(percentage_change)  # Convert to float
+                    'previous_close': float(previous_close),
+                    'current_price': float(current_price),
+                    'percentage_change': float(percentage_change)
                 }
 
     return jsonify(stock_info)
@@ -84,19 +74,16 @@ def losers():
             current_price = current_data['Close'].iloc[-1]
             percentage_change = ((current_price - previous_close) / previous_close) * 100
             
-            # Ensure percentage_change is a scalar
-            if isinstance(percentage_change, pd.Series):
-                percentage_change = percentage_change.item()
-
-            # Check if the percentage change is negative
             if percentage_change < 0:
                 stock_info[stock] = {
-                    'previous_close': float(previous_close),  # Convert to float
-                    'current_price': float(current_price),    # Convert to float
-                    'percentage_change': float(percentage_change)  # Convert to float
+                    'previous_close': float(previous_close),
+                    'current_price': float(current_price),
+                    'percentage_change': float(percentage_change)
                 }
 
     return jsonify(stock_info)
 
+# Vercel requires the app to be exposed as a callable
 if __name__ == '__main__':
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port, debug=True)
