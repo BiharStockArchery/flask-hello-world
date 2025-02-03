@@ -9,7 +9,7 @@
   "routes": [
     {
       "src": "/(gainers|losers)",
-      "dest": "app.py"
+      "dest": "index.py"
     }
   ]
 }
