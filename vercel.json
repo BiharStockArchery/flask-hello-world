@@ -8,7 +8,11 @@
   ],
   "routes": [
     {
-      "src": "/(gainers|losers)",
+      "src": "/gainers",
+      "dest": "index.py"
+    },
+    {
+      "src": "/losers",
       "dest": "index.py"
     }
   ]
