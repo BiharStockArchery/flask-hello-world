@@ -4,7 +4,7 @@ import yfinance as yf
 import pandas as pd
 
 app = Flask(__name__)
-
+ 
 # List of all stocks
 all_stocks = [
     "AXISBANK.NS", "AUBANK.NS", "BANDHANBNK.NS", "BANKBARODA.NS", "BANKINDIA.NS",
